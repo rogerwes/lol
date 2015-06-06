@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>League Testing</title>
+</head>
+
+<script src=jquery-2.1.4.min.js></script>
+<script src=underscore.js></script>
+<script src=basic.js></script>
+
+<body>
+<div style="width:500px; max-height:500px; float:left">
+	<button id="basicTst">GET ALL CHAMPS</button>
+	<table id=championTable style=width:500px; max-height:500px;>
+	  <thead>
+	  <tr>
+		    <td>image</td>
+		    <td>id</td>
+		    <td>key</td> 
+		    <td>name</td>
+		    <td>title</td>
+	  </tr>
+	  <thead>
+	  <tbody style="display: block;max-height:500px"></tbody>
+	</table>
+</div>
+<div style=float:right>
+	<button id=getSummoner>GET SUMMONER</button>
+	<input id=summonerName type=text></input>
+	<table id=summonerTable>
+		<tr>
+			<th>Stat</th>
+			<th>Value</th>
+		</tr>
+	</table>
+</div>
+</body>
+
+</html>
