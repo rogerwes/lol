@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<script src="file.js"></script>
+<script src="jquery-2.1.4.min.js"></script>
+<script src="underscore.js"></script>
+
+<button onclick="something('hii')">Try it</button>
+
+<button onclick="lolAPI()">LOL</button>
+
+<button onclick="getChampion()">GetAllChampions</button>
+
+<button onclick="runes()">Runes</button>
+
+
+<form id="formInput">
+Summoner name:<br>
+<input type="text" id='name'>
+<br>
+Summoner ID:<br>
+<input type="text" id='sumID'>
+</form>
+
+<div>
+	<p>
+		List of Runes:
+	</p>
+</div>
+<!-- do table within tables -->
+<table>
+	<td>
+		<!-- Teir 1 -->
+		<tr>
+			<td id="Image1">Image</td>
+			<td id="Name1">Name</td>
+			<td id="Type1">Type</td>
+		</tr>
+	</td>
+	<td>
+		<!-- teir 2 -->
+		<tr>
+			<td id="Image2">Image</td>
+			<td id="Name2">Name</td>
+			<td id="Type2">Type</td>
+		</tr>
+	</td>
+	<td>
+		<!-- Teir 3 -->
+		<tr>
+			<td id="Image3">Image</td>
+			<td id="Name3">Name</td>
+			<td id="Type3">Type</td>
+		</tr>
+	</td>
+</table>
+
+</body>
+</html>
