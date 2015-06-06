@@ -1,10 +1,11 @@
 /*eslint-env browser, jquery, meteor*/
 $(document).ready(function(){
-	var toggle = true;
 	$("#basicTst").on("click",function(){
 		getAllChampions();
 	});		
 	$("#getSummoner").on("click",function(){
+		$("#summonerTable").empty();
+		$("#summonerTable").append("<tr><th>Match Type</th><th>Match Stats</th></tr>");
 		var summonerName = $("#summonerName").val();
 		getBasicSummonerInfoBasic(summonerName);
 	});
@@ -24,7 +25,6 @@ function getAllChampions(){
 		type : "GET",
 		url : base + key,
 		success : function(result){
-			console.log(result);
 			var sorted = _.sortBy(result.data,'id');
 			_.each(sorted, function(champ){
 				createTableRowForChamp(champ, result.version);
@@ -50,23 +50,23 @@ function createTableRowForChamp(champ, version){
 	$("#championTable").append(row);
 }
 
-function getBasicSummonerInfoBasic(name){
+function getBasicSummonerInfoBasic(summonerName){
 	var base = "https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/";
 	var key = "?api_key=66617fa8-41f5-4e36-9216-801e21eba30d";
 	$.ajax({
 		type : "GET",
-		url : base + name + key,
+		url : base + summonerName + key,
 		success : function(result){
 			$("#errorfetchingSummoner").hide();
-			var keyMap = name.toLowerCase();
+			var keyMap = summonerName.toLowerCase();
 			if(result != undefined){
 				getStatsForSummoner(result[keyMap].id);	
 			}else{
-				throw "No Summoner found for search key.";
+				$("#errorfetchingSummoner").show().text("No Summoner found for search key.");
 			}
 		},
-		error : function(e){
-			$("#errorfetchingSummoner").show().text("Invalid Summoner name: "+name);
+		error : function(){
+			$("#errorfetchingSummoner").show().text("Invalid Summoner name: "+summonerName);
 		}
 		
 	});
@@ -80,20 +80,38 @@ function getStatsForSummoner(sId){
 		url : base + key,
 		success : function(result){
 			$("#errorfetchingSummoner").hide();
-			console.log(result);
 			if(result.playerStatSummaries != undefined){
-				var avgAndTotal = result.playerStatSummaries[0].aggregatedStats;
-				var pairsOfStats = _.pairs(avgAndTotal); 
-				_.each(pairsOfStats, function(at){
-					$("#summonerTable").append("<tr><td>"+at[0]+"</td><td>"+at[1]+"</td></tr>");
+				_.each(result.playerStatSummaries, function(match){
+					var type = match.playerStatSummaryType;
+					var aggStats = match.aggregatedStats;
+					createStatsTable(aggStats,type);
 				});
 			}else{
 				$("#errorfetchingSummoner").show().text("No information found.");
 			}
 		},
-		error : function(e){
-			$("#errorfetchingSummoner").show().text("Invalid Summoner ID: "+id);
+		error : function(){
+			$("#errorfetchingSummoner").show().text("Invalid Summoner ID: "+sId);
 		}
 	});
 }
 
+function createStatsTable(stats,type){
+	var pairsOfStats = _.pairs(stats); 
+	var statsTable = "<table><tbody style='display: block;max-height:100px; overflow-y: auto; width:280px'>";
+		
+	if(pairsOfStats.length > 0){
+		statsTable += "<tr><th>Stat</th><th>Value</th></tr>";
+		_.each(pairsOfStats, function(at){
+			statsTable += "<tr><td>"+at[0]+"</td><td>"+at[1]+"</td></tr>";
+		});
+	}else{
+		statsTable += "<tr>No Data</tr>";
+	}
+	
+	statsTable + "</tbody></table>";
+	$("#summonerTable").append("<tr>"+
+		"<td>"+type+"</td>"+
+		"<td>"+statsTable+"</td>"+
+		"</tr>");
+}
