@@ -8,6 +8,12 @@ $(document).ready(function(){
 		var summonerName = $("#summonerName").val();
 		getBasicSummonerInfoBasic(summonerName);
 	});
+	$("#summonerName").on('keypress',function(e){
+		if(e.keyCode === 13){
+			$("#getSummoner").trigger('click');
+		}
+		
+	});
 });
 
 function getAllChampions(){
@@ -35,7 +41,7 @@ function createTableRowForChamp(champ, version){
 	var ver = version;
 	var thumbnail = champ.image.full;
 	
-	var row = "<tr><td><img src='http://ddragon.leagueoflegends.com/cdn/"+ver+"/img/champion/"+thumbnail+"'></td>"+
+	var row = "<tr><td><img style='height:50px;width:50px' src='http://ddragon.leagueoflegends.com/cdn/"+ver+"/img/champion/"+thumbnail+"'></td>"+
 	"<td class=id>"+id+"</td>"+
 	"<td class=key>"+key+"</td>"+
 	"<td class=name>"+champName+"</td>"+
@@ -51,14 +57,18 @@ function getBasicSummonerInfoBasic(name){
 		type : "GET",
 		url : base + name + key,
 		success : function(result){
+			$("#errorfetchingSummoner").hide();
 			var keyMap = name.toLowerCase();
 			if(result != undefined){
 				getStatsForSummoner(result[keyMap].id);	
 			}else{
 				throw "No Summoner found for search key.";
 			}
-			
+		},
+		error : function(e){
+			$("#errorfetchingSummoner").show().text("Invalid Summoner name: "+name);
 		}
+		
 	});
 }
 
@@ -69,12 +79,20 @@ function getStatsForSummoner(sId){
 		type : "GET",
 		url : base + key,
 		success : function(result){
+			$("#errorfetchingSummoner").hide();
 			console.log(result);
-			var avgAndTotal = result.playerStatSummaries[0].aggregatedStats;
-			var pairsOfStats = _.pairs(avgAndTotal); 
-			_.each(pairsOfStats, function(at){
-				$("#summonerTable").append("<tr><td>"+at[0]+"</td><td>"+at[1]+"</td></tr>");
-			});
+			if(result.playerStatSummaries != undefined){
+				var avgAndTotal = result.playerStatSummaries[0].aggregatedStats;
+				var pairsOfStats = _.pairs(avgAndTotal); 
+				_.each(pairsOfStats, function(at){
+					$("#summonerTable").append("<tr><td>"+at[0]+"</td><td>"+at[1]+"</td></tr>");
+				});
+			}else{
+				$("#errorfetchingSummoner").show().text("No information found.");
+			}
+		},
+		error : function(e){
+			$("#errorfetchingSummoner").show().text("Invalid Summoner ID: "+id);
 		}
 	});
 }
