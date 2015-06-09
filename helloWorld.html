@@ -6,6 +6,42 @@
 <script src="tools/jquery-2.1.4.min.js"></script>
 <script src="tools/underscore.js"></script>
 
+<!-- <style>
+body {
+  font-family:Arial, Helvetica, sans-serif;
+}
+a.small-link {
+    font-size:80%;
+}
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+table {
+  width:100%;
+  border-collapse:collapse;
+}
+td, th {
+  font-size:1em;
+  border:1px solid #2F81D3;
+  padding:3px 7px 2px 7px;
+}
+th {
+  font-size:1.2em;
+  text-align:left;
+  padding-top:5px;
+  padding-bottom:4px;
+  background-color:#50A7EF;
+  color:#fff;
+}
+tr.alt td {
+  color:#000;
+  background-color:#EAF2D3;
+}
+</style>
+-->
+
+
 <button onclick="something('hii')">Try it</button>
 
 <button onclick="lolAPI()">LOL</button>
@@ -14,6 +50,7 @@
 
 <button onclick="runes()">Runes</button>
 
+<button onclick="insertRow('table1')">insert</button>
 
 <form id="formInput">
 Summoner name:<br>
@@ -29,35 +66,35 @@ Summoner ID:<br>
 	</p>
 </div>
 
-<TABLE border="3" cellpadding="10" cellspacing="10">
+<table id="table" border="3">
+
+</table>
+
+<TABLE border="3" cellpadding="10" cellspacing="10" align="center">
 	<TD>
-		<table border="3" cellpadding="3" cellspacing="3">
-           <TR>
-				<td id="Image1">Image</td>
-				<td id="Name1">Name</td>
-				<td id="Type1">Type</td>
-				<td id="Info1">Info</td>
-           </TR>
+		<table border="3" cellpadding="3" cellspacing="3" id="table1">
+		<th>Image</th>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Info</th>
 		</table>
 	</TD>
 	<TD> 
-		<table border="3" cellpadding="3" cellspacing="3">
-			<tr>
-				<td id="Image2">Image</td>
-				<td id="Name2">Name</td>
-				<td id="Type2">Type</td>
-			</tr>
+		<table border="3" cellpadding="3" cellspacing="3" id="table2">
+		<th>Image</th>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Info</th>
 		</table>
 	</TD>
-	<td>
-		<table border="3" cellpadding"3" cellspacing="3">
-			<tr>
-				<td id="Image3">Image</td>
-				<td id="Name3">Name</td>
-				<td id="Type3">Type</td>
-			</tr>
+	<TD>
+		<table border="3" cellpadding"3" cellspacing="3" id="table3">
+		<th>Image</th>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Info</th>
 		</table>
-	</td>
+	</TD>
 </TABLE>
 
 </body>

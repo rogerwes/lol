@@ -113,25 +113,26 @@ function rune(rune){
 }
 
 
-
 //func to take given runes and write out to the page
 //data is a Rune, and idData is a Rune by ID
-function outputToHTML(data){
+function outputToHTML(data){	
+	var rune = "<TR> <TD>" 
+		+ data.image + "</TD><TD>"
+		+ data.name + "</TD><TD>" 
+		+ data.rune.type + "</TD><TD>"
+		+ data.description + "</TD></TR>";
+	
 	if(data.rune.tier == 1)
 	{
-		$("#Name1").append("<div>" + data.name + "</div>");
-		$("#Type1").append("<div>" + data.rune.type + "<div>");
-		$("#Info1").append("<div>" + data.description + "<div>");
+		$("#table1").append(rune);
 	}
 	else if(data.rune.tier == 2)
 	{
-		$("#Name2").append("<div>" + data.name + "<div>");
-		$("#Type2").append("<div>" + data.rune.type + "<div>");
+		$("#table2").append(rune);
 	}
 	else
 	{
-		$("#Name3").append("<div>" + data.name + "<div>");
-		$("#Type3").append("<div>" + data.rune.type + "<div>");
+		$("#table3").append(rune);
 	}
 }
 
