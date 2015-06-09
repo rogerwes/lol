@@ -54,43 +54,74 @@ function runes(){
 		dataType: "json",
 		url: getter,
 		success: function(result){
+			console.log("runes success");
 			console.log(result);
 			_.each(result.data, function(r){
-				outputToHTML(r, rune(r.id));
+				//outputToHTML(r, rune(r.id));
+				rune(r);
 			});
+			
+			//instead of foreaching and directing output inside,
+			//do foreach, then in complete for second call we can
+			//call output.
 		},
 		error: function(error){
 			//todo: figure out a way to handle errors	
+		},
+		complete: function(data){
+			console.log("runes completed");
+			//console.log(data.responseText);
+			//_.each(data.responseText, function(r){
+			//	rune(r);
+			//})
+			//rune(data.responseText);
 		}
 	});
 }
 
+
+
 //gathers rune data on ID
-function rune(id){
+function rune(rune){
 	var getter = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/rune/";
 	var options = "?runeData=all&";
-	var full = getter + id + options + apikey;
-	var returnme;	
+	var full = getter + rune.id + options + apikey;
+	//var deferred = $.Deferred();
 	
 	$.ajax({
 		dataType: "json",
 		url: full,
 		success: function(result){
+			console.log("rune successfull");
 			console.log(result);
-			returnme = result;
+			outputToHTML(result);
+			//returnme = result;
+			//return result;
+			//lets do a call in here to give the output...
+		},
+		complete: function(data){
+			console.log("rune completed");
+			console.log(data.responseText);
+			//outputToHTML(data.responseText);
 		}
 	})
-	return returnme;
+	
+	
+	
+	//return defered.promise();
+	//return returnme;
 }
 
 
 
 //func to take given runes and write out to the page
-function outputToHTML(data, idData){
+//data is a Rune, and idData is a Rune by ID
+function outputToHTML(data){
 	if(data.rune.tier == 1)
 	{
 		$("#Name1").append("<div>" + data.name + "</div>");
-		$("#Type1").append("<dvv>" + data.rune.type + "<div>");
+		$("#Type1").append("<div>" + data.rune.type + "<div>");
+		$("#Info1").append("<div>" + data.description + "<div>");
 	}
 	else if(data.rune.tier == 2)
 	{
