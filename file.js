@@ -49,6 +49,11 @@ function getChampion(){
 //Gather all the functions
 function runes(){
 	var getter = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/rune?api_key=0003fbfc-6008-4aac-bc0e-b0359ac2891e";
+	//TODO: clear out the tables!
+	
+	$("#table1 tr").remove();
+	$("#table2 tr").remove();
+	$("#table3 tr").remove();
 	
 	$.ajax({
 		dataType: "json",
@@ -104,7 +109,7 @@ function rune(rune){
 			console.log(data.responseText);
 			//outputToHTML(data.responseText);
 		}
-	})
+	});
 	
 	
 	
@@ -114,26 +119,43 @@ function rune(rune){
 
 
 //func to take given runes and write out to the page
-//data is a Rune, and idData is a Rune by ID
-function outputToHTML(data){	
-	var rune = "<TR> <TD>" 
-		+ data.image + "</TD><TD>"
+//data is a Rune
+function outputToHTML(data){
+	var version = $("#versions option:selected").text();//"5.2.1";
+	var runeHTML = "<TR><TD><img style='height:50px;width:50px' src='http://ddragon.leagueoflegends.com/cdn/"
+		+ version + "/img/rune/" 
+		+ data.image.full + "'/></TD><TD>"
 		+ data.name + "</TD><TD>" 
 		+ data.rune.type + "</TD><TD>"
 		+ data.description + "</TD></TR>";
 	
 	if(data.rune.tier == 1)
 	{
-		$("#table1").append(rune);
+		$("#table1").append(runeHTML);
 	}
 	else if(data.rune.tier == 2)
 	{
-		$("#table2").append(rune);
+		$("#table2").append(runeHTML);
 	}
 	else
 	{
-		$("#table3").append(rune);
+		$("#table3").append(runeHTML);
 	}
+}
+
+function getVersions(){
+	var getter = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/versions?";
+	$.ajax({
+		dataType: "json",
+		url: getter + apikey,
+		success: function(result){
+			console.log(result);
+
+			_.each(result, function(r){
+				$("#versions").append("<option>" + r + "</option>");
+			});
+		}
+	})
 }
 
 //func to make some sense of the rune stats

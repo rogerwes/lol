@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<body>
+<body onload="getVersions()">
 
 <script src="file.js"></script>
 <script src="tools/jquery-2.1.4.min.js"></script>
@@ -52,6 +52,10 @@ tr.alt td {
 
 <button onclick="insertRow('table1')">insert</button>
 
+<select id="versions">
+	
+</select>
+
 <form id="formInput">
 Summoner name:<br>
 <input type="text" id='name'>
@@ -72,7 +76,7 @@ Summoner ID:<br>
 
 <TABLE border="3" cellpadding="10" cellspacing="10" align="center">
 	<TD>
-		<table border="3" cellpadding="3" cellspacing="3" id="table1">
+		<table border="3" cellpadding="0" cellspacing="0" id="table1">
 		<th>Image</th>
 		<th>Name</th>
 		<th>Type</th>
@@ -80,7 +84,7 @@ Summoner ID:<br>
 		</table>
 	</TD>
 	<TD> 
-		<table border="3" cellpadding="3" cellspacing="3" id="table2">
+		<table border="3" cellpadding="0" cellspacing="0" id="table2">
 		<th>Image</th>
 		<th>Name</th>
 		<th>Type</th>
@@ -88,7 +92,7 @@ Summoner ID:<br>
 		</table>
 	</TD>
 	<TD>
-		<table border="3" cellpadding"3" cellspacing="3" id="table3">
+		<table border="3" cellpadding"0" cellspacing="0" id="table3">
 		<th>Image</th>
 		<th>Name</th>
 		<th>Type</th>
