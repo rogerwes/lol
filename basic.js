@@ -18,7 +18,6 @@ $(document).ready(function(){
 });
 
 function getAllChampions(){
-	var key = "&api_key=66617fa8-41f5-4e36-9216-801e21eba30d";
 	var base = "https://na.api.pvp.net/api/lol/static-data/na/v1.2/champion?champData=image";
 	
 	$.ajax({
@@ -52,7 +51,6 @@ function createTableRowForChamp(champ, version){
 
 function getBasicSummonerInfoBasic(summonerName){
 	var base = "https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/";
-	var key = "?api_key=66617fa8-41f5-4e36-9216-801e21eba30d";
 	$.ajax({
 		type : "GET",
 		url : base + summonerName + key,
@@ -74,7 +72,6 @@ function getBasicSummonerInfoBasic(summonerName){
 
 function getStatsForSummoner(sId){
 	var base = "https://na.api.pvp.net/api/lol/na/v1.3/stats/by-summoner/"+sId+"/summary?season=SEASON2015";
-	var key = "&api_key=66617fa8-41f5-4e36-9216-801e21eba30d";
 	$.ajax({
 		type : "GET",
 		url : base + key,

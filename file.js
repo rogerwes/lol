@@ -4,7 +4,6 @@ function something(hii) {
 	alert(hii);
 }
 
-var apikey = "api_key=0003fbfc-6008-4aac-bc0e-b0359ac2891e";
 
 function lolAPI(){	
 	var url = "https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/";
@@ -25,7 +24,7 @@ function lolAPI(){
 }
 
 function getChampion(){
-	var getter = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key=0003fbfc-6008-4aac-bc0e-b0359ac2891e";
+	var getter = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?";
 	
 	$.ajax({
 		dataType: "json",
@@ -48,7 +47,7 @@ function getChampion(){
 
 //Gather all the functions
 function runes(){
-	var getter = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/rune?api_key=0003fbfc-6008-4aac-bc0e-b0359ac2891e";
+	var getter = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/rune?";
 	//TODO: clear out the tables!
 	
 	$("#table1 tr").remove();
