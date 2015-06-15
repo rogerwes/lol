@@ -54,6 +54,8 @@ tr.alt td {
 
 <button onclick="getVersions()">Update Versions</button>
 
+<button onclick="twitch()">twitch</button>
+
 <select id="versions">
 	
 </select>
@@ -66,7 +68,7 @@ Summoner ID:<br>
 <input type="text" id='sumID'>
 <br>
 Key:<br>
-<input type="text" id='key'>
+<input type="text" id='key' oninput="keyFunction()" value="Input Key">
 </form>
 
 <div>

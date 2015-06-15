@@ -1,4 +1,7 @@
 /*eslint-env browser, jquery, meteor*/
+
+var apikey = "";
+
 function something(hii) {
 	//Alert with message	
 	alert(hii);
@@ -10,7 +13,7 @@ function lolAPI(){
 	var summonerID = document.getElementById('name').value;
 	$.ajax({
 		dataType: "json",
-		url: url + summonerID + apikey,
+		url: url + summonerID + "api_key=" + apikey,
 		success: function(result){
 			console.log(result);
 			//TODO: verify ack is equal to the summonerID
@@ -24,11 +27,11 @@ function lolAPI(){
 }
 
 function getChampion(){
-	var getter = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?";
+	var getter = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key=";
 	
 	$.ajax({
 		dataType: "json",
-		url: getter,
+		url: getter + apikey,
 		success: function(result){
 			console.log(result);
 			
@@ -47,7 +50,7 @@ function getChampion(){
 
 //Gather all the functions
 function runes(){
-	var getter = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/rune?";
+	var getter = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/rune?api_key=";
 	//TODO: clear out the tables!
 	
 	$("#table1 tr").remove();
@@ -56,7 +59,7 @@ function runes(){
 	
 	$.ajax({
 		dataType: "json",
-		url: getter,
+		url: getter + apikey,
 		success: function(result){
 			console.log("runes success");
 			console.log(result);
@@ -88,7 +91,7 @@ function runes(){
 //gathers rune data on ID
 function rune(rune){
 	var getter = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/rune/";
-	var options = "?runeData=all&";
+	var options = "?runeData=all&api_key=";
 	var full = getter + rune.id + options + apikey;
 	//var deferred = $.Deferred();
 	
@@ -143,7 +146,7 @@ function outputToHTML(data){
 }
 
 function getVersions(){
-	var getter = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/versions?";
+	var getter = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/versions?api_key=";
 	$.ajax({
 		dataType: "json",
 		url: getter + apikey,
@@ -161,4 +164,53 @@ function getVersions(){
 function stats(){
 	
 }
+
+
+function keyFunction(){
+	apikey = "";
+	apikey = $("#key").val();
+	console.log(apikey);
+}
+
+
+function twitch(){
+	
+	$.ajax({
+		dataType: "json",
+		url: "https://api.twitch.tv/kraken",
+		success: function(result){
+			console.log("Twitch!!!!");
+			consle.log(result);
+		},
+		error: function(error){
+			console.log("Twitch error");
+			console.log(error);
+		}
+	})
+	
+}
+
+
+//TODO take a look at the callback for twitch.
+function getJ() {
+	var url = "http://localhost:8080/";
+	var getter = "/api/json?pretty=true";
+	$.ajax({
+		url: url + getter,
+		dataType: "jsonp",
+		data: "depth=1&tree=jobs[displayName,lastBuild[result]]&jsonp=callBack",
+		jsonCallback: "callBack",
+		//Success isn't needed when we have a callback apparently
+		// success: function (result) {
+		// 	printme(result);
+		// },
+		error: function (error) {
+			console.log(error);
+			//printme(error);
+		}
+	});
+}
+
+
+
 
