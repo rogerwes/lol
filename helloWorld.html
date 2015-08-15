@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 <html>
-<body onload="getVersions()">
+<title>Testing page for Runes and Twitch integration</title>
+<body> <!-- Not needed since we don't store key value anymore onload="getVersions()"> -->
 
 <script src="file.js"></script>
 <script src="tools/jquery-2.1.4.min.js"></script>
 <script src="tools/underscore.js"></script>
+<script src="tools/Chart.min.js"></script>
+<script src="https://ttv-api.s3.amazonaws.com/twitch.min.js"></script>
+<script>
+  /*globals Twitch */
+Twitch.init({clientId: 'YOUR_CLIENT_ID_HERE'}, function(error, status) {
+    // the sdk is now loaded
+  });
+</script>
+
 
 <!-- <style>
 body {
@@ -41,7 +51,6 @@ tr.alt td {
 </style>
 -->
 
-
 <button onclick="something('hii')">Try it</button>
 
 <button onclick="lolAPI()">LOL</button>
@@ -54,7 +63,11 @@ tr.alt td {
 
 <button onclick="getVersions()">Update Versions</button>
 
-<button onclick="twitch()">twitch</button>
+<button onclick="callback()">twitch</button>
+
+<button><img src="http://ttv-api.s3.amazonaws.com/assets/connect_dark.png" class="twitch-connect" href="#" /></button>
+
+<button onclick="chart()">Chart</button>
 
 <select id="versions">
 	
@@ -77,9 +90,8 @@ Key:<br>
 	</p>
 </div>
 
-<table id="table" border="3">
-
-</table>
+<!-- tables are apparently a bad thing to use for layout... 
+	try a div instead? -->
 
 <TABLE border="3" cellpadding="10" cellspacing="10" align="center">
 	<TD>
@@ -107,6 +119,13 @@ Key:<br>
 		</table>
 	</TD>
 </TABLE>
+
+<canvas id="myChart" 
+		width="400" 
+		height="400">
+				
+		</canvas>
+		
 
 </body>
 </html>

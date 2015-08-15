@@ -1,5 +1,6 @@
 /*eslint-env browser, jquery, meteor*/
 
+/*globals Twitch Chart*/
 var apikey = "";
 
 function something(hii) {
@@ -13,7 +14,7 @@ function lolAPI(){
 	var summonerID = document.getElementById('name').value;
 	$.ajax({
 		dataType: "json",
-		url: url + summonerID + "api_key=" + apikey,
+		url: url + summonerID + "?api_key=" + apikey,
 		success: function(result){
 			console.log(result);
 			//TODO: verify ack is equal to the summonerID
@@ -51,7 +52,6 @@ function getChampion(){
 //Gather all the functions
 function runes(){
 	var getter = "https://global.api.pvp.net/api/lol/static-data/na/v1.2/rune?api_key=";
-	//TODO: clear out the tables!
 	
 	$("#table1 tr").remove();
 	$("#table2 tr").remove();
@@ -86,6 +86,17 @@ function runes(){
 	});
 }
 
+function getMatch(id){
+	var getter = "https://global/api.pvp.net/api/lol/na/v2.2/match/";
+	var postID = "?api_key="
+	$.ajax({
+		dataType: "json",
+		url: getter + id + postID + apikey,
+		success: function(result){
+			console.log(result);
+		}
+	})
+}
 
 
 //gathers rune data on ID
@@ -174,10 +185,12 @@ function keyFunction(){
 
 
 function twitch(){
-	
+	var data = "";
 	$.ajax({
-		dataType: "json",
+		dataType: "jsonp",
 		url: "https://api.twitch.tv/kraken",
+		data: data,
+		jsonCallback: "callback",
 		success: function(result){
 			console.log("Twitch!!!!");
 			consle.log(result);
@@ -186,12 +199,19 @@ function twitch(){
 			console.log("Twitch error");
 			console.log(error);
 		}
-	})
-	
+	});
+}
+
+function callback(){
+	Twitch.api({method: 'streams', params: {game:'Diablo III', limit:3} }, 
+		function(error, list) {
+  		console.debug(list);
+	});
 }
 
 
 //TODO take a look at the callback for twitch.
+//https://github.com/justintv/twitch-js-sdk
 function getJ() {
 	var url = "http://localhost:8080/";
 	var getter = "/api/json?pretty=true";
@@ -210,6 +230,87 @@ function getJ() {
 		}
 	});
 }
+
+function chart(){
+	var ctx = $("#myChart").get(0).getContext("2d");
+	
+	var myNewChart = new Chart(ctx);
+	
+	var myLineChart = new Chart(ctx).Line(data, {
+		bezierCurve: true
+	});
+}
+
+var data = {
+    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    datasets: [
+        {
+            label: "My First dataset",
+            fillColor: "rgba(220,220,220,0.2)",
+            strokeColor: "rgba(220,220,220,1)",
+            pointColor: "rgba(220,220,220,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: [65, 59, 80, 81, 56, 55, 40]
+        },
+        {
+            label: "My Second dataset",
+            fillColor: "rgba(151,187,205,0.2)",
+            strokeColor: "rgba(151,187,205,1)",
+            pointColor: "rgba(151,187,205,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,187,205,1)",
+            data: [28, 48, 40, 19, 86, 27, 90]
+        },
+        {
+        	label: "3rd Dataset",
+        	fillColor: "rgba(255,0,0,0.3)",
+        	strokeColor: "",
+        	pointColor: "",
+        	pointStrokeColor: "",
+        	pointHighlightFill: "rgba(255,0,0,0.3)", //this one is the hover-over color dot key
+        	pointHighlightStroke: "rgba(255,0,0,0.3)",
+        	data: [10, 15, 20, 25, 35, 45, 65]
+        }
+    ]
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
